@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>PWA Demo Page</title>
+
+    <!-- PWA化のために追加するもの(1/2): manifest.json ファイルへのリンク -->
+    <link rel="manifest" href="./manifest.json">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34;
+            color: #61dafb;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh; /* ページ全体を占めるための最小高さ設定 */
+        }
+
+        header {
+            background-color: #1f2229;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #1f2229;
+            color: #61dafb;
+            border: none;
+            text-decoration: none; /* 下線を無効にする */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tab:hover {
+            background-color: #43a0e4;
+            color: #282c34;
+        }
+
+        h1 {
+            padding-top: 2em;
+            font-size: 3em;
+            margin: 0;
+        }
+
+        p {
+            color: #fff;
+        }
+
+        .white {
+            color: #fff;
+        }
+
+        footer {
+            background-color: #1f2229;
+            color: #61dafb;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            margin-top: auto; /* ページの残りの高さをフッターに割り当てる */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="https://cubic-cosmos.com" class="tab">tab 1</a>
+        <a href="https://cubic-cosmos.com" class="tab">tab 2</a>
+        <a href="https://cubic-cosmos.com" class="tab">tab 3</a>
+    </header>
+
+    <h1>Hello PWA!</h1>
+    <p>これはPWAをテストするためのデモページです．</p>
+    <div class="white">
+        ホーム画面に追加してみましょう．
+        <br>
+        オフラインでも閲覧可能になります．
+    </div>
+    <div style="padding-top: 2em;">
+        JavaScriptの動作確認；
+        <br>
+        文字列を反対向きにするツール
+    </div>
+    <br>
+    <div>
+        <label for="textInput">Enter Text:</label>
+        <input type="text" id="textInput" name="text" required>
+        <button onclick="reverseText()">Go</button>
+    </div>
+    <br>
+    <div id="result"></div>
+
+    <footer>
+        <p>© 2023 cubic-cosmos.com</p>
+    </footer>
+
+</body>
+</html>
+
+<script>
+    function reverseText() {
+        // テキストボックスの値を取得
+        let text = document.getElementById("textInput").value;
+        // 反対向きにする
+        let reversedText = text.split("").reverse().join("");
+        // 結果を表示
+        document.getElementById("result").innerHTML = reversedText;
+    }
+
+    // PWA化のために追加するもの(2/2): Service Worker の登録
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(function (registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function (error) {
+                console.error('Service Worker registration failed:', error);
+            });
+    }
+</script>
