@@ -81,13 +81,21 @@
         <a href="https://cubic-cosmos.com/test/pwa_demo/about.html" class="tab">About</a>
     </header>
 
-    <h1>Hello PWA!</h1>
-    <p>これはPWAをテストするためのデモページです．</p>
-    <div class="white">
-        ホーム画面に追加してみましょう．
+    <h1>JS Test</h1>
+    <div style="padding-top: 2em;">
+        JavaScriptの動作確認；
         <br>
-        オフラインでも閲覧可能になります．
+        文字列を反対向きにするツール
     </div>
+    <br>
+    <div>
+        <label for="textInput">Enter Text:</label>
+        <input type="text" id="textInput" name="text" required>
+        <button onclick="reverseText()">Go</button>
+    </div>
+    <br>
+    <div id="result"></div>
+
     <footer>
         <p>© 2023 cubic-cosmos.com</p>
     </footer>
@@ -96,6 +104,15 @@
 </html>
 
 <script>
+    function reverseText() {
+        // テキストボックスの値を取得
+        let text = document.getElementById("textInput").value;
+        // 反対向きにする
+        let reversedText = text.split("").reverse().join("");
+        // 結果を表示
+        document.getElementById("result").innerHTML = reversedText;
+    }
+
     // PWA化のために追加するもの(2/2): Service Worker の登録
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js')
